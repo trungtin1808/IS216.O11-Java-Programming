@@ -1,7 +1,7 @@
-create database QLTV1;
+create database QLTV;
 go
 
-use QLTV1;
+use QLTV;
 go
 
 
@@ -156,15 +156,15 @@ CREATE TABLE NGUOIDUNG
 INSERT INTO DAUSACH (TENDAUSACH, TACGIA, NXB, NAMXB, TONGSO, VITRI, SANCO, DANGCHOMUON)
 VALUES
     (N'Cuốn sách A', N'Tác giả A', 'NXB A', 2020, 100, N'Kệ 1', 100, 0),
-    (N'Cuốn sách B', N'Tác giả B', 'NXB B', 2018, 150, N'Kệ 2', 150, 10),
-    (N'Cuốn sách C', N'Tác giả C', 'NXB C', 2015, 120, N'Kệ 3', 120, 5),
-    (N'Cuốn sách D', N'Tác giả D', 'NXB D', 2019, 80, N'Kệ 4', 80, 15),
-    (N'Cuốn sách E', N'Tác giả E', 'NXB E', 2017, 90, N'Kệ 5', 90, 8),
-    (N'Cuốn sách F', N'Tác giả F', 'NXB F', 2016, 110, N'Kệ 6', 110, 3),
-    (N'Cuốn sách G', N'Tác giả G', 'NXB G', 2022, 130, N'Kệ 7', 130, 20),
-    (N'Cuốn sách H', N'Tác giả H', 'NXB H', 2021, 70, N'Kệ 8', 70, 12),
-    (N'Cuốn sách I', N'Tác giả I', 'NXB I', 2014, 100, N'Kệ 9', 100, 7),
-    (N'Cuốn sách J', N'Tác giả J', 'NXB J', 2020, 140, N'Kệ 10', 140, 18);
+    (N'Cuốn sách B', N'Tác giả B', 'NXB B', 2018, 160, N'Kệ 2', 150, 10),
+    (N'Cuốn sách C', N'Tác giả C', 'NXB C', 2015, 125, N'Kệ 3', 120, 5),
+    (N'Cuốn sách D', N'Tác giả D', 'NXB D', 2019, 95, N'Kệ 4', 80, 15),
+    (N'Cuốn sách E', N'Tác giả E', 'NXB E', 2017, 98, N'Kệ 5', 90, 8),
+    (N'Cuốn sách F', N'Tác giả F', 'NXB F', 2016, 113, N'Kệ 6', 110, 3),
+    (N'Cuốn sách G', N'Tác giả G', 'NXB G', 2022, 150, N'Kệ 7', 130, 20),
+    (N'Cuốn sách H', N'Tác giả H', 'NXB H', 2021, 82, N'Kệ 8', 70, 12),
+    (N'Cuốn sách I', N'Tác giả I', 'NXB I', 2014, 107, N'Kệ 9', 100, 7),
+    (N'Cuốn sách J', N'Tác giả J', 'NXB J', 2020, 158, N'Kệ 10', 140, 18);
 select * from DAUSACH
 -- Chèn dữ liệu vào bảng NGUOIDUNG
 insert into NGUOIDUNG values ('hai','hai',1);
@@ -299,6 +299,7 @@ SELECT * FROM PHIEUMUONSACH;
 GO
 SELECT * FROM CTMS;
 GO
+SELECT * FROM DAUSACH WHERE MADAUSACH=4 OR MADAUSACH=7
 
 
 
