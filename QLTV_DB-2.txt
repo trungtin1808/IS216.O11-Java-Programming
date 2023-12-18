@@ -8,6 +8,8 @@ go
 /*==============================================================*/
 /* Table: CTMS                                                  */
 /*==============================================================*/
+DROP TABLE IF EXISTS CTMS;
+GO
 create table CTMS (
    MADAUSACH              int              not null,
    MAPHIEUMUONSACH         int              not null,
@@ -19,6 +21,8 @@ go
 /*==============================================================*/
 /* Table: CTTS                                                  */
 /*==============================================================*/
+DROP TABLE IF EXISTS CTTS;
+GO
 create table CTTS ( 
    MADAUSACH               int              not null,
    MAPHIEUTRA           int              not null,
@@ -31,6 +35,8 @@ go
 /*==============================================================*/
 /* Table: DAUSACH                                               */
 /*==============================================================*/
+DROP TABLE IF EXISTS DAUSACH;
+GO
 create table DAUSACH (
    MADAUSACH            int IDENTITY(1,1) PRIMARY KEY,
    TENDAUSACH           nvarchar(50)          null,
@@ -47,6 +53,8 @@ go
 /*==============================================================*/
 /* Table: DOCGIA                                                */
 /*==============================================================*/
+DROP TABLE IF EXISTS DOCGIA;
+GO
 create table DOCGIA ( 
    MADOCGIA             int IDENTITY(1,1) PRIMARY KEY,
    HOTEN                nvarchar(40)          null,
@@ -63,6 +71,8 @@ go
 /*==============================================================*/
 /* Table: HOADON                                                */
 /*==============================================================*/
+DROP TABLE IF EXISTS HOADON;
+GO
 create table HOADON (
    MAHD            int IDENTITY(1,1) PRIMARY KEY,
    MAPHIEUTRA           int             not null,
@@ -74,6 +84,8 @@ go
 /*==============================================================*/
 /* Table: PHIEUMUONSACH                                         */
 /*==============================================================*/
+DROP TABLE IF EXISTS PHIEUMUONSACH;
+GO
 create table PHIEUMUONSACH (
    MAPHIEUMUONSACH      int IDENTITY(1,1) PRIMARY KEY,
    MADOCGIA             int              not null,
@@ -86,6 +98,8 @@ go
 /*==============================================================*/
 /* Table: PHIEUTRASACH                                          */
 /*==============================================================*/
+DROP TABLE IF EXISTS PHIEUTRASACH;
+GO
 create table PHIEUTRASACH (
    MAPHIEUTRA           int IDENTITY(1,1) PRIMARY KEY,
    MAPHIEUMUONSACH             int              not null,
@@ -143,7 +157,8 @@ go
 /*=================================================*/
 /*===				 BANG USER					===*/
 /*=================================================*/
-
+DROP TABLE IF EXISTS NGUOIDUNG;
+GO
 CREATE TABLE NGUOIDUNG
 (
         TEN VARCHAR(50) NOT NULL,
@@ -186,12 +201,13 @@ VALUES
     (N'Vũ Văn I', '1991-12-12', 0, N'Địa chỉ I', 'emailI@example.com', '2022-09-10', '2023-09-10', 0),
     (N'Bùi Thị K', '1986-04-22', 1, N'Địa chỉ K', 'emailK@example.com', '2021-10-15', '2022-10-15', 0);
 select* from DOCGIA
-
+GO
 
 
 /*Proc THEMPMS thực hiện thêm phiếu mượn sach và thêm ct phiếu mượn*/
 
 --DROP PROCEDURE THEMPMS
+DROP PROCEDURE IF EXISTS THEMPMS
 GO
 CREATE PROCEDURE THEMPMS
     @MaDocGia INT,
@@ -300,10 +316,11 @@ GO
 SELECT * FROM CTMS;
 GO
 SELECT * FROM DAUSACH WHERE MADAUSACH=4 OR MADAUSACH=7
-
+GO
 
 /* PROC GIA HẠN THẺ ĐỘC GIẢ THÊM 2 THÁNG*/
-go
+DROP PROCEDURE IF EXISTS GIAHANTHE
+GO
 CREATE PROCEDURE GIAHANTHE
     @MADOCGIA int
 AS
