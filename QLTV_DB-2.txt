@@ -309,6 +309,33 @@ EXEC THEMPMS
     @TinhTrang = @TestTinhTrang,
     @DsSachMuon = @TestDsSachMuon;
 GO
+-- Testcase 3 cho stored procedure THEMPMS
+DECLARE @TestMaDocGia INT = 4;
+DECLARE @TestNgayMuon DATE = '2023-01-20';
+DECLARE @TestHanTra DATE = '2023-01-27';
+DECLARE @TestTongSoLuong INT = 10;
+DECLARE @TestTinhTrang INT = 0;
+
+DECLARE @TestDsSachMuon XML = '<DsSachMuon>
+                                    <Sach>
+                                        <MaDauSach>4</MaDauSach>
+                                        <SoLuong>5</SoLuong>
+                                    </Sach>
+                                    <Sach>
+                                        <MaDauSach>3</MaDauSach>
+                                        <SoLuong>5</SoLuong>
+                                    </Sach>
+                                </DsSachMuon>';
+
+-- Execute stored procedure THEMPMS
+EXEC THEMPMS
+    @MaDocGia = @TestMaDocGia,
+    @NgayMuon = @TestNgayMuon,
+    @HanTra = @TestHanTra,
+    @TongSoLuong = @TestTongSoLuong,
+    @TinhTrang = @TestTinhTrang,
+    @DsSachMuon = @TestDsSachMuon;
+GO
 -- Select data from PHIEUMUONSACH and CTMS to verify the result
 SELECT * FROM PHIEUMUONSACH;
 GO
@@ -396,6 +423,7 @@ GO
 DECLARE @MAPHIEUMUONSACH_TEST2 INT = 2;
 DECLARE @NGAYTRA_TEST2 DATETIME = '2023-01-17';
 EXEC THEMPTS @MAPHIEUMUONSACH_TEST2, @NGAYTRA_TEST2;
+
 GO
 -- check result
 SELECT * FROM PHIEUTRASACH WHERE MAPHIEUMUONSACH = 1 OR MAPHIEUMUONSACH=2;
@@ -453,3 +481,24 @@ FROM PHIEUTRASACH
 JOIN PHIEUMUONSACH ON PHIEUMUONSACH.MAPHIEUMUONSACH = PHIEUTRASACH.MAPHIEUMUONSACH
 JOIN DOCGIA ON PHIEUMUONSACH.MADOCGIA = DOCGIA.MADOCGIA
 WHERE PHIEUTRASACH.MAPHIEUTRA = 2;
+GO
+
+-- select dữ liệu cho báo cáo thống kê 6.1
+SELECT DAUSACH.MADAUSACH,DAUSACH.TENDAUSACH,COUNT(PHIEUMUONSACH.MAPHIEUMUONSACH) AS SOLUOTMUON
+FROM   DAUSACH
+LEFT JOIN CTMS ON DAUSACH.MADAUSACH = CTMS.MADAUSACH
+LEFT JOIN PHIEUMUONSACH ON CTMS.MAPHIEUMUONSACH = PHIEUMUONSACH.MAPHIEUMUONSACH
+WHERE  MONTH(PHIEUMUONSACH.NGAYMUON) = 1 AND YEAR(PHIEUMUONSACH.NGAYMUON) = 2023
+GROUP BY    DAUSACH.MADAUSACH, DAUSACH.TENDAUSACH
+ORDER BY    SOLUOTMUON DESC
+GO
+-- select dữ liệu cho báo cáo thống kê 6.2
+-- tổng tiền phạt sẽ là NULL nếu chưa thực hiện trả sách
+SELECT  DOCGIA.MADOCGIA, DOCGIA.HOTEN, SUM(ISNULL(PHIEUMUONSACH.TONGSL, 0)) AS TONGSLSACHMUON,
+    SUM(ISNULL(PHIEUTRASACH.TIENPHATKINAY, 0)) AS TONGTIENPHAT
+FROM  DOCGIA
+LEFT JOIN PHIEUMUONSACH ON DOCGIA.MADOCGIA = PHIEUMUONSACH.MADOCGIA
+LEFT JOIN PHIEUTRASACH ON PHIEUMUONSACH.MAPHIEUMUONSACH = PHIEUTRASACH.MAPHIEUMUONSACH
+WHERE MONTH(PHIEUMUONSACH.NGAYMUON) = 1 AND YEAR(PHIEUMUONSACH.NGAYMUON) = 2023
+GROUP BY  DOCGIA.MADOCGIA, DOCGIA.HOTEN
+ORDER BY  TONGSLSACHMUON DESC;
