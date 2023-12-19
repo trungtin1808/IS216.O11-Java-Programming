@@ -2,44 +2,35 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Object2;
+package Object;
 
 import java.sql.Date; 
-import java.util.Calendar;
 
 public class DocGia {
     private int loaiDocGia;
     private String hoTen, diaChi, email;
     private Date ngaySinh, ngayLapThe, ngayDenHan;
+    private int tienNo;
     
     public DocGia() {
-//        setMaDocGia(0);
         setHoTen("");
         setLoaiDocGia(0);
         setNgaySinh(new Date(System.currentTimeMillis()));
         setDiaChi("");
         setEmail("");
-        setNgayLapThe();
-        setNgayDenHan(4); 
+        setTienNo(0);
     }
     
-    public DocGia(int mdg, String ht, int ldg, Date ns, String dc, String em) {
-//        setMaDocGia(mdg);
+    public DocGia(String ht, int ldg, Date ns, String dc, String em, Date nlt, Date ndh) {
         setHoTen(ht);
         setLoaiDocGia(ldg);
         setNgaySinh(ns);
         setDiaChi(dc);
         setEmail(em);
-        setNgayLapThe();
-        setNgayDenHan(4);
+        setNgayLapThe(nlt);
+        setNgayDenHan(ndh);
+        setTienNo(0);
     }
-    
-//    public int getMaDocGia() {
-//        return this.maDocGia;
-//    }
-//    public void setMaDocGia(int mdg) {
-//        this.maDocGia = mdg;
-//    }
     
     public String getHoTen() {
         return this.hoTen;
@@ -79,17 +70,21 @@ public class DocGia {
     public Date getNgayLapThe() {
         return this.ngayLapThe;
     }
-    public void setNgayLapThe() {
-        this.ngayLapThe = new Date(System.currentTimeMillis());
+    public void setNgayLapThe(Date nlt) {
+        this.ngayLapThe = nlt;
     }
     
     public Date getNgayDenHan() {
         return this.ngayDenHan;
     }
-    public void setNgayDenHan(int soThang) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date(System.currentTimeMillis()));
-        cal.add(Calendar.MONTH, soThang);
-        this.ngayDenHan = new Date(cal.getTime().getTime());
+    public void setNgayDenHan(Date ndh) {
+        this.ngayDenHan = ndh;
+    }
+   
+    public int getTienNo() {
+        return this.tienNo;
+    }
+    public void setTienNo(int tn) {
+        this.tienNo = tn;
     }
 }

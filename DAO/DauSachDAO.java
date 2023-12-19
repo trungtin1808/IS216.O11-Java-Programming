@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DAO2;
+package DAO;
 
 import java.sql.Connection;
-import Object2.DauSach;
+import Object.DauSach;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -16,7 +16,7 @@ public class DauSachDAO {
     public static Connection conn = Connect.getConnect();
     
     public static boolean ThemDauSach(DauSach ds) {
-        String sql = "insert into DAUSACH (TENDS, TACGIA, NXB, NAMXB, VITRI, TONGSO, DANGCHOMUON, SANCO) values (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into DAUSACH (TENDAUSACH, TACGIA, NXB, NAMXB, VITRI, TONGSO, DANGCHOMUON, SANCO) values (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stm = conn.prepareStatement(sql);) {
             stm.setString(1, ds.getTenDS());
             stm.setString(2, ds.getTacGia());
@@ -33,18 +33,8 @@ public class DauSachDAO {
         }
     }
     
-    public static boolean XoaDauSach(int mds) {
-        String sql = "delete from DAUSACH where MADS = ? ";
-        try (PreparedStatement stm = conn.prepareStatement(sql);) {
-            stm.setString(1, Integer.toString(mds));
-            return stm.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            throw new ArithmeticException(ex.getMessage());
-        }
-    }
-    
     public static boolean SuaDauSach(DauSach ds, int mds) {
-        String query = "select DANGCHOMUON from DAUSACH where MADS = ?";
+        String query = "select DANGCHOMUON from DAUSACH where MADAUSACH = ?";
         int dangChoMuon = 0;
         try (PreparedStatement stm = conn.prepareStatement(query);) {
             stm.setInt(1, mds);
@@ -56,7 +46,7 @@ public class DauSachDAO {
         ds.setDangChoMuon(dangChoMuon);
         ds.setSanCo();
         
-        String sql = "update DAUSACH set TENDS = ?, TACGIA = ?, NXB = ?, NAMXB=?, VITRI = ?, TONGSO = ?, SANCO = ? where MADS = ?";
+        String sql = "update DAUSACH set TENDAUSACH = ?, TACGIA = ?, NXB = ?, NAMXB=?, VITRI = ?, TONGSO = ?, SANCO = ? where MADAUSACH = ?";
         try (PreparedStatement stm = conn.prepareStatement(sql);) {
             stm.setString(1, ds.getTenDS());
             stm.setString(2, ds.getTacGia());
@@ -85,7 +75,7 @@ public class DauSachDAO {
     }
     
     public static boolean KTTongSoSua(int mds, int ts) {
-        String query = "select TONGSO from DAUSACH where MADS = ?";
+        String query = "select TONGSO from DAUSACH where MADAUSACH = ?";
         int tongSo = 0;
         try (PreparedStatement stm = conn.prepareStatement(query);) {
             stm.setInt(1, mds);
@@ -98,16 +88,5 @@ public class DauSachDAO {
         if (ts < tongSo) return false;
         return true;
     }
-    
-    public static boolean KTTinhTrangMuonSach(int mds) {
-        String query = "select * from PHIEUMUONSACH, CTPMS where PHIEUMUONSACG.MAPMS = CTPMS.MAPMS AND CTPMS.MADS = ? and PHIEUMUONSACH.TINHTRANG = 0";
-        try (PreparedStatement stm = conn.prepareStatement(query);) {
-            stm.setInt(1, mds);
-            if (!stm.executeQuery().next()) return true;
-        }
-        catch (SQLException ex) {
-            throw new ArithmeticException(ex.getMessage());
-        }
-        return false;
-    }
+
 }
